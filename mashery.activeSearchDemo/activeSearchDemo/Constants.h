@@ -13,10 +13,10 @@
 // Active.com API - http://developer.active.com
 // r={range in miles} num={# results}  f={filter}
 #define ACTIVEURI @"http://api.amp.active.com/search/?v=json&r=25&f=activities&s=relevance&num=10&page=1"
-#define ACTIVEAPIKEY @"YOUR-ACTIVE.COM-SEARCH-API-KEY-HERE"
+#define ACTIVEAPIKEY @"uwsv2tz2bpx5wpgff4xf5x7z"
 
 // StackMob API - http://stackmob.com
-#define STACKMOBPUBLICKEY @"YOUR-STACKMOB-PUBLIC-KEY-HERE"
+#define STACKMOBPUBLICKEY @"6959cfae-938f-4d6f-961e-6aeaefa739a2"
 
 #define kScreenWidth [[UIScreen mainScreen] applicationFrame].size.width
 #define kScreenHeight [[UIScreen mainScreen] applicationFrame].size.height

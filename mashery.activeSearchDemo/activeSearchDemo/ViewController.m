@@ -13,8 +13,13 @@
 #import "SMQuery.h"
 #import "Activity.h"
 #import "Constants.h"
+#import "DetailViewController.h"
+#import "FavoriteViewController.h"
+#import "AccountViewController.h"
 
 @interface ViewController ()
+
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @end
 
@@ -36,7 +41,73 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.managedObjectContext = [self.appDelegate managedObjectContext];
+    
+    self.title = @"Search";
+    
+    UIImage *navBarImage = [UIImage imageNamed:@"ipad-menu-bar.png"];
+    
+    [self.navigationController.navigationBar setBackgroundImage:navBarImage
+                                                  forBarMetrics:UIBarMetricsDefault];
+    
+    // Search Bar
+    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor lightGrayColor]];
+    
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
+        setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor  whiteColor],
+                             UITextAttributeTextColor,[UIColor grayColor],
+                             UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(0, -1)],
+                             UITextAttributeTextShadowOffset,nil]
+        forState:UIControlStateNormal];
+    
+    UIImage *image1 = [UIImage imageNamed:@"ipad-back.png"];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:image1 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    
+    self.managedObjectContext = [[self.appDelegate coreDataStore] contextForCurrentThread];
+    self.client = [self.appDelegate client];
+}
+
+-(void) viewDidAppear:(BOOL)animated {
+    if([self.client isLoggedIn]) {
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(submitLogout:)];
+        
+        self.navigationItem.rightBarButtonItem = rightButton;
+       
+    } else {
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(goToLogin:)];
+        
+        self.navigationItem.rightBarButtonItem = rightButton;
+    }
+    
+    UIImage *image1 = [UIImage imageNamed:@"ipad-menubar-button.png"];
+    [self.navigationItem.rightBarButtonItem setBackgroundImage:image1 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+}
+
+-(IBAction)goToLogin:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:[NSBundle mainBundle]];
+    ViewController *login = [storyboard instantiateViewControllerWithIdentifier:@"loginForm"];
+    
+    [self.navigationController pushViewController: login animated:YES];
+}
+
+-(IBAction)submitLogout:(id)sender {
+    [self.client logoutOnSuccess:^(NSDictionary *result) {
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(goToLogin:)];
+        
+        self.navigationItem.rightBarButtonItem = rightButton;
+        
+        UIImage *image1 = [UIImage imageNamed:@"ipad-menubar-button.png"];
+        [self.navigationItem.rightBarButtonItem setBackgroundImage:image1 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+        
+        BOOL isReachable = YES;
+        NSDictionary *dataDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:isReachable]
+                                                             forKey:@"isReachable"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reachabilityChanged" object:self userInfo:dataDict];
+        
+    } onFailure:^(NSError *error) {
+        NSLog(@"Logout Fail: %@",error);
+    }];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
@@ -72,6 +143,7 @@
 }
 
 - (void)searchActivities:(NSString *)query {
+    
     NSString *encodedQuery = (__bridge_transfer NSString *) CFURLCreateStringByAddingPercentEscapes(
                                                                                                     NULL,
                                                                                                     (__bridge CFStringRef)query,
@@ -104,7 +176,7 @@
     }
     
     // Clear any previous map annotations
-    [mapView removeAnnotations:mapView.annotations];
+    [_mapView removeAnnotations:_mapView.annotations];
     
     SBJsonParser *jsonParser = [[SBJsonParser alloc] init];
     NSString *resultsString =[[NSString alloc] initWithBytes:[result bytes] length:[result length] encoding: NSUTF8StringEncoding];
@@ -127,13 +199,14 @@
     }
     
     // Add locations to map
-    [mapView addAnnotations:activityArray];
+    [_mapView addAnnotations:activityArray];
     [self zoomMapViewToFitAnnotationsAnimated:false];
     
     // Store locations in StackMob
-    [self persistLocationsOnStackmob];
+    //[self persistLocationsOnStackmob];
 }
 
+/*
 - (void)persistLocationsOnStackmob
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -174,13 +247,14 @@
         }
     }
 }
+ */
 
 // Autosize map method by Brian Reiter http://ow.ly/f08HG
 
 - (void)zoomMapViewToFitAnnotationsAnimated:(BOOL)animated
 {
-    NSArray *annotations = mapView.annotations;
-    int count = [mapView.annotations count];
+    NSArray *annotations = _mapView.annotations;
+    int count = [_mapView.annotations count];
     if ( count == 0) { return; } //bail if no annotations
     //can't use NSArray with MKMapPoint because MKMapPoint is not an id
     //convert NSArray of id <MKAnnotation> into an MKCoordinateRegion that can be used to set the map size
@@ -213,8 +287,69 @@
         region.span.longitudeDelta = MINIMUM_ZOOM_ARC;
     }
     
-    [mapView setRegion:region animated:animated];
+    [_mapView setRegion:region animated:animated];
 }
+
+-(void) mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:[NSBundle mainBundle]];
+    DetailViewController *detail = [storyboard instantiateViewControllerWithIdentifier:@"detail"];
+    
+    Activity *activity = (Activity *)view.annotation;
+    
+    detail.titleForActivity = activity.title;
+    detail.locationForActivity = activity.location;
+    detail.urlForActivity = activity.url;
+    detail.summaryForActivity = activity.summary;
+    
+    [self.navigationController pushViewController: detail animated:YES];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(Activity *)annotation
+{
+    // in case it's the user location, we already have an annotation, so just return nil
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+        return nil;
+    
+    static NSString *BridgeAnnotationIdentifier = @"bridgeAnnotationIdentifier";
+    
+    MKPinAnnotationView *pinView = (MKPinAnnotationView *)
+    [self.mapView dequeueReusableAnnotationViewWithIdentifier:BridgeAnnotationIdentifier];
+    if (pinView == nil)
+    {
+        // if an existing pin view was not available, create one
+        MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
+                                              initWithAnnotation:annotation reuseIdentifier:BridgeAnnotationIdentifier];
+        customPinView.pinColor = MKPinAnnotationColorGreen;
+        customPinView.animatesDrop = YES;
+        customPinView.canShowCallout = YES;
+        
+        // add a detail disclosure button to the callout which will open a new view controller page
+        //
+        // note: you can assign a specific call out accessory view, or as MKMapViewDelegate you can implement:
+        //  - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;
+        //
+        UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        [rightButton addTarget:self
+                        action:nil
+              forControlEvents:UIControlEventTouchUpInside];
+        customPinView.rightCalloutAccessoryView = rightButton;
+        
+        return customPinView;
+    }
+    else
+    {
+        pinView.annotation = annotation;
+    }
+    return pinView;
+    
+    
+    
+    return nil;
+}
+
+
+
 
 - (void)didReceiveMemoryWarning
 {
