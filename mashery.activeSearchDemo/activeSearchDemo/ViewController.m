@@ -99,12 +99,6 @@
         UIImage *image1 = [UIImage imageNamed:@"ipad-menubar-button.png"];
         [self.navigationItem.rightBarButtonItem setBackgroundImage:image1 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
         
-        BOOL isReachable = YES;
-        NSDictionary *dataDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:isReachable]
-                                                             forKey:@"isReachable"];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"reachabilityChanged" object:self userInfo:dataDict];
-        
     } onFailure:^(NSError *error) {
         NSLog(@"Logout Fail: %@",error);
     }];
@@ -201,53 +195,8 @@
     // Add locations to map
     [_mapView addAnnotations:activityArray];
     [self zoomMapViewToFitAnnotationsAnimated:false];
-    
-    // Store locations in StackMob
-    //[self persistLocationsOnStackmob];
-}
 
-/*
-- (void)persistLocationsOnStackmob
-{
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Activity" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    int x = 0;
-    for (Activity *activity in activityArray) {
-        x++;
-        // Edit the sort key as appropriate.
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-        NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-        [fetchRequest setSortDescriptors:sortDescriptors];
-        
-        // Query StackMob for existing title -- if !exist, then save.
-        NSFetchedResultsController *fetchedResultsController;
-        
-        NSPredicate *equalPredicate =[NSPredicate predicateWithFormat:@"title == %@", [NSString stringWithFormat:@"%@",activity.title]];
-        [fetchRequest setPredicate:equalPredicate];
-        
-        NSError *errorFetch = nil;
-        if (![fetchedResultsController performFetch:&errorFetch]) {
-            // Save the title in StackMob
-            NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Activity" inManagedObjectContext:self.managedObjectContext];
-            
-            [newManagedObject setValue:activity.title forKey:@"title"];
-            [newManagedObject setValue:activity.summary forKey:@"summary"];
-            [newManagedObject setValue:activity.url forKey:@"url"];
-            [newManagedObject setValue:activity.location forKey:@"location"];
-            [newManagedObject setValue:[NSString stringWithFormat:@"%f", activity.coordinate.latitude] forKey:@"latitude"];
-            [newManagedObject setValue:[NSString stringWithFormat:@"%f", activity.coordinate.longitude] forKey:@"longitude"];
-
-            [newManagedObject setValue:[newManagedObject assignObjectId] forKey:[newManagedObject primaryKeyField]];
-            
-            NSError *errorSave = nil;
-            if (![self.managedObjectContext save:&errorSave]) {
-                NSLog(@"Error saving to StackMob %@", errorSave);
-            }
-        }
-    }
 }
- */
 
 // Autosize map method by Brian Reiter http://ow.ly/f08HG
 
@@ -343,18 +292,13 @@
     }
     return pinView;
     
-    
-    
     return nil;
 }
-
-
 
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
-
 
 @end

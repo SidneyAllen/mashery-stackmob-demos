@@ -22,9 +22,7 @@
     NSMutableArray *activityArray;
 }
 
-
 @property (nonatomic, strong) IBOutlet DetailViewController *detailViewController;
-
 @property (strong, nonatomic) SMClient *client;
 @property (strong, nonatomic) SMQuery *query;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

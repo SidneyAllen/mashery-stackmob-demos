@@ -24,40 +24,6 @@
             </objects>
             <point key="canvasLocation" x="-1073" y="-556"/>
         </scene>
-        <!--Favorite View Controller - Favorties-->
-        <scene sceneID="gnw-hi-CwB">
-            <objects>
-                <tableViewController id="db3-Uh-Smd" customClass="FavoriteViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="1kj-h6-LsU">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="g54-7I-BX2">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="db3-Uh-Smd" id="lh9-dV-v1U"/>
-                            <outlet property="delegate" destination="db3-Uh-Smd" id="oj0-BF-Bu1"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="Favorties" id="pOH-FL-AVI"/>
-                    <navigationItem key="navigationItem" id="Le8-3f-aDn"/>
-                    <connections>
-                        <outlet property="myTableView" destination="1kj-h6-LsU" id="Xl1-bP-fUB"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0fP-Bs-mnM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-150" y="68"/>
-        </scene>
         <!--Favorite View Controller-->
         <scene sceneID="eBl-E5-W3o">
             <objects>
@@ -122,7 +88,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a0T-KT-rn3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="252" y="-346"/>
+            <point key="canvasLocation" x="-100" y="-346"/>
         </scene>
         <!--Navigation Controller - Search-->
         <scene sceneID="NVs-Ub-aYQ">
@@ -316,7 +282,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6iX-29-ixY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="293" y="-1088"/>
+            <point key="canvasLocation" x="281" y="-1103"/>
         </scene>
         <!--Navigation Controller - Favorties-->
         <scene sceneID="6qt-dh-Xud">
@@ -459,7 +425,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T5z-Ox-dwh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="708" y="-1088"/>
+            <point key="canvasLocation" x="704" y="-1103"/>
         </scene>
     </scenes>
     <resources>
@@ -511,6 +477,8 @@
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="action" name="goToLogin:"/>
+                <relationship kind="action" name="submitLogout:"/>
                 <relationship kind="outlet" name="activeSearchBar" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="detailViewController" candidateClass="DetailViewController"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>

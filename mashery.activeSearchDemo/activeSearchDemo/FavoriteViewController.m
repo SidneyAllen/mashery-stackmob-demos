@@ -51,7 +51,6 @@
 -(void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    
     [self setNavBarButton];
     if([self.client isLoggedIn]) {
         if(self.favoriteArray == nil)

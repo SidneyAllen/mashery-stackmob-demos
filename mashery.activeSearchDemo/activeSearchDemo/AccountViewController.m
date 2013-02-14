@@ -33,7 +33,6 @@
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

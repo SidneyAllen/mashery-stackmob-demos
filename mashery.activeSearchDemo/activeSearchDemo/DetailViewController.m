@@ -60,7 +60,6 @@
 
 -(IBAction)submitLogout:(id)sender {
     [self.client logoutOnSuccess:^(NSDictionary *result) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"logoutSuccess" object:self userInfo:nil];
         [self updateView];
 
     } onFailure:^(NSError *error) {
@@ -93,8 +92,6 @@
 - (IBAction)addFavorite:(id)sender {
     if([self.client isLoggedIn]) {
         
-        NSLog(@"add favorite");
-        
         // Save the title in StackMob
         NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Favorite" inManagedObjectContext:self.managedObjectContext];
             
@@ -114,7 +111,6 @@
         
         [self.navigationController pushViewController: login animated:YES];
     }
-    
 }
 
 @end
