@@ -13,14 +13,18 @@
 @implementation AppDelegate
 @synthesize client = _client;
 @synthesize managedObjectModel = _managedObjectModel;
-@synthesize managedObjectContext = _managedObjectContext;
+@synthesize coreDataStore = _coreDataStore;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Initialize StackMob
     self.client = [[SMClient alloc] initWithAPIVersion:@"0" publicKey:STACKMOBPUBLICKEY];
-    SMCoreDataStore *coreDataStore = [self.client coreDataStoreWithManagedObjectModel:self.managedObjectModel];
-    self.managedObjectContext = [coreDataStore managedObjectContext];
+    
+    SM_CACHE_ENABLED = YES;
+    
+    self.coreDataStore = [self.client coreDataStoreWithManagedObjectModel:self.managedObjectModel ];
+    self.coreDataStore.cachePolicy = SMCachePolicyTryCacheElseNetwork;
+    
     
     return YES;
 }

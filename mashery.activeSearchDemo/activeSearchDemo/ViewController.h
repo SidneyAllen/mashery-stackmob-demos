@@ -12,18 +12,21 @@
 #import <CoreLocation/CoreLocation.h>
 #import <CoreData/CoreData.h>
 #import "Activity.h"
+#import "DetailViewController.h"
 
 @class SMClient;
 @class SMQuery;
 
 @interface ViewController : UIViewController <UISearchBarDelegate, MKMapViewDelegate, NSFetchedResultsControllerDelegate> {
     __weak IBOutlet UISearchBar *searchBarInstance;
-    __weak IBOutlet MKMapView *mapView;
     NSMutableArray *activityArray;
 }
 
+@property (nonatomic, strong) IBOutlet DetailViewController *detailViewController;
+@property (strong, nonatomic) SMClient *client;
 @property (strong, nonatomic) SMQuery *query;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+@property (weak, nonatomic) IBOutlet UISearchBar *activeSearchBar;
 
 @end
