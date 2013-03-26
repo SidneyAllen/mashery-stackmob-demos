@@ -18,7 +18,5 @@
     id<CustomSearchBarDelegate> delegate;
     UIButton *customBackButtom;
 }
-//@property (nonatomic, assign) id<CustomSearchBarDelegate> delegate;
 
--(void)cancelAction;
 @end

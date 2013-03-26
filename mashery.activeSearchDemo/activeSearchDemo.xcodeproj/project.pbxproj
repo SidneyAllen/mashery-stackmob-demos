@@ -417,8 +417,6 @@
 		7E633C0B1651685100837DBC = {
 			isa = PBXGroup;
 			children = (
-				1F6E6B9816C9C83C0068F3C0 /* MobileCoreServices.framework */,
-				1F6E6B9616C9C8320068F3C0 /* SystemConfiguration.framework */,
 				1F6E6B6416C9C7EB0068F3C0 /* StackMob-v1.2.0 */,
 				7E633C6F16516ECC00837DBC /* SBJson */,
 				7E633C201651685100837DBC /* activeSearchDemo */,
@@ -438,6 +436,8 @@
 		7E633C191651685100837DBC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F6E6B9816C9C83C0068F3C0 /* MobileCoreServices.framework */,
+				1F6E6B9616C9C8320068F3C0 /* SystemConfiguration.framework */,
 				7E63400116518E8A00837DBC /* CoreLocation.framework */,
 				7E633FF4165177DF00837DBC /* CoreData.framework */,
 				7E633FC61651750A00837DBC /* MapKit.framework */,
@@ -816,17 +816,12 @@
 		7E633C3B1651685100837DBC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/StackMob_iOS-master/StackMob/External/libraries\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "activeSearchDemo/activeSearchDemo-Prefix.pch";
 				INFOPLIST_FILE = "activeSearchDemo/activeSearchDemo-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/StackMob_iOS-master/StackMob/External/inneractive/lib\"",
-					"\"$(SRCROOT)/StackMob-v1.1.2\"",
 					"\"$(SRCROOT)/StackMob-v1.2.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -837,17 +832,12 @@
 		7E633C3C1651685100837DBC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/StackMob_iOS-master/StackMob/External/libraries\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "activeSearchDemo/activeSearchDemo-Prefix.pch";
 				INFOPLIST_FILE = "activeSearchDemo/activeSearchDemo-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/StackMob_iOS-master/StackMob/External/inneractive/lib\"",
-					"\"$(SRCROOT)/StackMob-v1.1.2\"",
 					"\"$(SRCROOT)/StackMob-v1.2.0\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
