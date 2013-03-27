@@ -16,7 +16,7 @@
 #define ACTIVEAPIKEY @"YOUR_ACTIVE_API_KEY"
 
 // StackMob API - http://stackmob.com
-#define STACKMOBPUBLICKEY @"YOUR_STACKMOB_PUBLIC_API_KEY"
+#define STACKMOBPUBLICKEY @"YOUR_STACKMOB_PUBLIC_DEVELOPMENT_API_KEY"
 
 #define kScreenWidth [[UIScreen mainScreen] applicationFrame].size.width
 #define kScreenHeight [[UIScreen mainScreen] applicationFrame].size.height
