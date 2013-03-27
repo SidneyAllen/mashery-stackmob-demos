@@ -10,7 +10,7 @@
 
 @implementation CustomSearchBar
 
-//@synthesize delegate;
+    //@synthesize delegate;
 -(id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
