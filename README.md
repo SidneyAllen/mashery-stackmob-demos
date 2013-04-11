@@ -14,7 +14,7 @@ integrate various Mashery Network APIs in the native Objective-C
 iOS environment, along with the StackMob backend as a service
 (BaaS).
 
-These are simple single page apps that utilizes several native
+These are simple tabbed-nav apps that utilizes several native
 frameworks, a couple of external libraries, and a single Storyboard
 view controller scene.
 
