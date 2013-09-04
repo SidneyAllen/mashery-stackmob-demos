@@ -17,8 +17,6 @@
 @end
 
 @implementation AccountViewController
-
-@synthesize client = _client;
 @synthesize managedObjectContext = _managedObjectContext;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -30,18 +28,17 @@
     return self;
 }
 
-- (AppDelegate *)appDelegate {
-    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.title = @"Login";
     
-    self.client = [SMClient defaultClient];
-    self.managedObjectContext = [[self.appDelegate coreDataStore] contextForCurrentThread];
+    //self.client = [SMClient defaultClient];
+    //self.managedObjectContext = [[self.appDelegate coreDataStore] contextForCurrentThread];
+    self.managedObjectContext = [[[SMClient defaultClient] coreDataStore] contextForCurrentThread];
+    
+    
     
     self.usernameField.delegate = self;
     self.passwordField.delegate = self;
@@ -76,14 +73,16 @@
      We instantiate an instance of User using our custom init method.
      */
     
+    
     User *newUser = [[User alloc] initIntoManagedObjectContext:self.managedObjectContext];
+   
     
     /*
      We set the value of the primary key field to what the user has typed in the usernameField text field.
      [newUser primaryKeyField] will return the userPrimaryKeyField value from the referenced SMClient instance.
      */
-    [newUser setValue:self.usernameField.text forKey:[newUser primaryKeyField]];
-    
+    [newUser setUsername:self.usernameField.text];
+  
     /*
      SMUserManagedObject provides the setPassword: method and should be the only method used
      to set a password for a user object.
@@ -94,14 +93,14 @@
         NSLog(@"New User created!");
         [self submitLogin:nil];
     } onFailure:^(NSError *error) {
-        [self.managedObjectContext deleteObject:newUser];
-        [newUser removePassword];
+        
         NSLog(@"There was an error! %@", error);
     }];
+     
 }
 
 - (IBAction)submitLogin:(id)sender {
-    [self.client loginWithUsername:self.usernameField.text password:self.passwordField.text onSuccess:^(NSDictionary *results) {
+    [[SMClient defaultClient] loginWithUsername:self.usernameField.text password:self.passwordField.text onSuccess:^(NSDictionary *results) {
      
         [[NSNotificationCenter defaultCenter] postNotificationName:@"loggedInUserChanged" object:self];
         [self.navigationController popViewControllerAnimated:YES];

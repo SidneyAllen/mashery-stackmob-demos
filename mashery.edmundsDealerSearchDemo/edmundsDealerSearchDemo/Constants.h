@@ -12,10 +12,10 @@
 // API constants
 // Edmunds.com Dealer API - http://developer.edmunds.com
 #define EDMUNDSURI @"http://api.edmunds.com/v1/api/dealer?radius=3&fmt=json"
-#define EDMUNDSAPIKEY @"YOUR_EDMUNDS_API_KEY"
+#define EDMUNDSAPIKEY @"u3fh5a66n9t7xjmv7ec8ek5u"
 
 // StackMob API - http://stackmob.com
-#define STACKMOBPUBLICKEY @"YOUR_STACKMOB_PUBLIC_DEVELOPMENT_API_KEY"
+#define STACKMOBPUBLICKEY @"df72827d-fee6-4640-a9ee-06eb532ac318"
 
 #define kScreenWidth [[UIScreen mainScreen] applicationFrame].size.width
 #define kScreenHeight [[UIScreen mainScreen] applicationFrame].size.height

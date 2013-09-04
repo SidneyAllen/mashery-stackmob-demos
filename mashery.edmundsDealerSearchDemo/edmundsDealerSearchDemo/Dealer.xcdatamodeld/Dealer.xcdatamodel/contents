@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12E55" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Favorite" syncable="YES">
         <attribute name="createddate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="favoriteId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="User" syncable="YES">
+    <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>

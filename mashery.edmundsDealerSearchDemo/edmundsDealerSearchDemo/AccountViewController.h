@@ -9,12 +9,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class SMClient;
 
 @interface AccountViewController : UITableViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) SMClient *client;
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
