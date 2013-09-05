@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "StackMob.h"
+#import "ADVTheme.h"
 
 @interface DetailViewController ()
 
@@ -32,6 +33,14 @@
 
     
     self.managedObjectContext = [[[SMClient defaultClient] coreDataStore] contextForCurrentThread];
+    
+    id <ADVTheme> theme = [ADVThemeManager sharedTheme];
+    
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[theme viewBackground]]];
+    
+    [self.favoriteButton setBackgroundImage:[theme colorButtonBackgroundForState:UIControlStateNormal] forState:UIControlStateNormal];
+    [self.favoriteButton setBackgroundImage:[theme colorButtonBackgroundForState:UIControlStateHighlighted] forState:UIControlStateHighlighted];
+    
     
     self.titleLabel.textLabel.text = self.titleForActivity;
     self.locationLabel.textLabel.text = self.locationForActivity;

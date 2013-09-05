@@ -17,12 +17,13 @@
     NSString * _summaryForActivity;
 }
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (nonatomic, retain) NSString * titleForActivity;
 @property (nonatomic, retain) NSString * locationForActivity;
 @property (nonatomic, retain) NSString * urlForActivity;
 @property (nonatomic, retain) NSString * summaryForActivity;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *titleLabel;
 

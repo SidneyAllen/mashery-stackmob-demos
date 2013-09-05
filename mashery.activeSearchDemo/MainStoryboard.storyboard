@@ -131,8 +131,12 @@
                                     <constraint firstAttribute="width" constant="200" type="user" id="yNa-5q-fdX"/>
                                 </constraints>
                             </imageView>
-                            <searchBar contentMode="redraw" placeholder="[Postal Code] or [City,State,Country]" translatesAutoresizingMaskIntoConstraints="NO" id="Hpb-KF-Dcv" customClass="CustomSearchBar">
+                            <searchBar alpha="0.99999999999999989" contentMode="redraw" barStyle="blackTranslucent" placeholder="[Postal Code] or [City,State,Country]" translatesAutoresizingMaskIntoConstraints="NO" id="Hpb-KF-Dcv" customClass="CustomSearchBar">
                                 <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
                                 <connections>
                                     <outlet property="delegate" destination="2" id="YUc-JQ-f5y"/>
                                 </connections>
@@ -243,7 +247,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cVh-rX-Gxr">
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="47" id="Q6N-Dh-WXk"/>
+                                                        <constraint firstAttribute="height" constant="42" id="lYL-i6-qBW"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Add to Favorites" backgroundImage="ipad-button-green.png">
@@ -263,7 +267,7 @@
                                         </view>
                                         <constraints>
                                             <constraint firstItem="cVh-rX-Gxr" firstAttribute="centerX" secondItem="2Q1-Wr-0JL" secondAttribute="centerX" type="default" id="1WX-yg-Ycc"/>
-                                            <constraint firstItem="cVh-rX-Gxr" firstAttribute="top" secondItem="2Q1-Wr-0JL" secondAttribute="top" constant="6" id="dmn-0y-f0O"/>
+                                            <constraint firstItem="cVh-rX-Gxr" firstAttribute="centerY" secondItem="2Q1-Wr-0JL" secondAttribute="centerY" type="default" id="8GP-9Z-tp3"/>
                                         </constraints>
                                     </tableViewCell>
                                 </cells>
@@ -275,6 +279,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="favoriteButton" destination="cVh-rX-Gxr" id="xMu-Ex-Z81"/>
                         <outlet property="locationLabel" destination="3Tv-OW-ASH" id="Vp6-3m-YgY"/>
                         <outlet property="summaryTextView" destination="pat-Cu-VNp" id="tWL-Vb-4ro"/>
                         <outlet property="titleLabel" destination="h3K-9O-uf1" id="kkU-Ux-xyh"/>
@@ -390,6 +395,9 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
             <relationships>
                 <relationship kind="action" name="addFavorite:"/>
+                <relationship kind="action" name="goToLogin:"/>
+                <relationship kind="action" name="submitLogout:"/>
+                <relationship kind="outlet" name="favoriteButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="locationLabel" candidateClass="UITableViewCell"/>
                 <relationship kind="outlet" name="summaryTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="titleLabel" candidateClass="UITableViewCell"/>

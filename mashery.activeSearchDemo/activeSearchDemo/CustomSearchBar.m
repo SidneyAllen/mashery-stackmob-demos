@@ -7,7 +7,7 @@
 //
 
 #import "CustomSearchBar.h"
-#import "ADVTheme.h"
+
 
 @implementation CustomSearchBar
 
@@ -16,13 +16,11 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        id <ADVTheme> theme = [ADVThemeManager sharedTheme];
-        [self setBackgroundColor:  [UIColor colorWithPatternImage:[theme viewBackground]]];
+
         //Set other button states (hightlight, select, etc) here
     }
     return self;
 }
-
 
 
 
