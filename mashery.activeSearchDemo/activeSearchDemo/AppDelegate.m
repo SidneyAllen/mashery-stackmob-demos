@@ -11,23 +11,17 @@
 #import "Constants.h"
 
 @implementation AppDelegate
-@synthesize client = _client;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize coreDataStore = _coreDataStore;
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Initialize StackMob
+    
     self.client = [[SMClient alloc] initWithAPIVersion:@"0" publicKey:STACKMOBPUBLICKEY];
-    
-    SM_CACHE_ENABLED = YES;
-    
-    self.coreDataStore = [self.client coreDataStoreWithManagedObjectModel:self.managedObjectModel ];
-    self.coreDataStore.cachePolicy = SMCachePolicyTryCacheElseNetwork;
-    
+    self.coreDataStore = [self.client coreDataStoreWithManagedObjectModel:self.managedObjectModel];
     
     return YES;
 }
+
 
 - (NSManagedObjectModel *)managedObjectModel
 {
