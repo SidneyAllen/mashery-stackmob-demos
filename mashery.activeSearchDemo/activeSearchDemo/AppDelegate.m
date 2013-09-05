@@ -9,12 +9,15 @@
 #import "AppDelegate.h"
 #import "StackMob.h"
 #import "Constants.h"
+#import "ADVTheme.h"
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    [ADVThemeManager customizeAppAppearance];
     
     self.client = [[SMClient alloc] initWithAPIVersion:@"0" publicKey:STACKMOBPUBLICKEY];
     self.coreDataStore = [self.client coreDataStoreWithManagedObjectModel:self.managedObjectModel];

@@ -10,8 +10,6 @@
 #import <CoreData/CoreData.h>
 #import <QuartzCore/QuartzCore.h>
 
-@class SMClient;
-
 @interface DetailViewController : UITableViewController  {
     NSString * _titleForActivity;
     NSString * _locationForActivity;
@@ -20,7 +18,6 @@
 }
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) SMClient *client;
 
 @property (nonatomic, retain) NSString * titleForActivity;
 @property (nonatomic, retain) NSString * locationForActivity;

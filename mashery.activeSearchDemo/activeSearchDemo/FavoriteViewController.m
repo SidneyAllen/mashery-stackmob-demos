@@ -7,7 +7,6 @@
 //
 
 #import "FavoriteViewController.h"
-#import "AppDelegate.h"
 #import "StackMob.h"
 
 @interface FavoriteViewController ()
@@ -17,14 +16,8 @@
 
 @implementation FavoriteViewController
 
-@synthesize client = _client;
 @synthesize favoriteArray = _favoriteArray;
 @synthesize managedObjectContext = _managedObjectContext;
-
-- (AppDelegate *)appDelegate {
-    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
 
 - (void)viewDidLoad
 {
@@ -32,13 +25,7 @@
     
     self.title = @"Favorites";
     
-    UIImage *navBarImage = [UIImage imageNamed:@"ipad-menu-bar.png"];
-    
-    [self.navigationController.navigationBar setBackgroundImage:navBarImage
-                                                  forBarMetrics:UIBarMetricsDefault];
-    
-    self.managedObjectContext = [[self.appDelegate coreDataStore] contextForCurrentThread];
-    self.client = [self.appDelegate client];
+    self.managedObjectContext = [[[SMClient defaultClient] coreDataStore] contextForCurrentThread];
     
 }
 
@@ -52,7 +39,7 @@
     [super viewWillAppear:animated];
     
     [self setNavBarButton];
-    if([self.client isLoggedIn]) {
+    if([[SMClient defaultClient] isLoggedIn]) {
         if(self.favoriteArray == nil)
         {
             [self loadTableData];
@@ -66,7 +53,7 @@
 
 -(void)setNavBarButton {
     
-    if([self.client isLoggedIn]) {
+    if([[SMClient defaultClient] isLoggedIn]) {
         [self.myView setHidden:YES];
         [self.myTableView setHidden:NO];
     } else {
@@ -74,7 +61,7 @@
         [self.myTableView setHidden:YES];
     }
     
-    if([self.client isLoggedIn]) {
+    if([[SMClient defaultClient] isLoggedIn]) {
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(submitLogout:)];
         self.navigationItem.rightBarButtonItem = rightButton;
         
@@ -96,7 +83,7 @@
 }
 
 -(IBAction)submitLogout:(id)sender {
-    [self.client logoutOnSuccess:^(NSDictionary *result) {
+    [[SMClient defaultClient] logoutOnSuccess:^(NSDictionary *result) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"logoutSuccess" object:self userInfo:nil];
         [self setNavBarButton];
         self.favoriteArray = nil;
@@ -114,7 +101,7 @@
 }
 
 - (void) loadTableData {
-    [[self.appDelegate coreDataStore] purgeCacheOfObjectsWithEntityName:@"Favorite"];
+    [[[SMClient defaultClient] coreDataStore] purgeCacheOfObjectsWithEntityName:@"Favorite"];
     
     sleep(1);
     

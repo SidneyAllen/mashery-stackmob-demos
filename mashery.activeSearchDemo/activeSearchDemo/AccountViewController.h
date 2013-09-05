@@ -8,16 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@class SMClient;
-
-@interface AccountViewController : UITableViewController <UITextFieldDelegate>
+@interface AccountViewController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) SMClient *client;
-@property (weak, nonatomic) IBOutlet UITextField *usernameField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordField;
 
-- (IBAction)submitSignup:(id)sender;
+@property (nonatomic, strong) IBOutlet UITableView *loginTableView;
+@property (strong, nonatomic) IBOutlet UITextField *userTextField;
+@property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *signupButton;
+
 - (IBAction)submitLogin:(id)sender;
+- (IBAction)submitSignup:(id)sender;
 
 @end

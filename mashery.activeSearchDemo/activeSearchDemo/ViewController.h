@@ -14,7 +14,6 @@
 #import "Activity.h"
 #import "DetailViewController.h"
 
-@class SMClient;
 @class SMQuery;
 
 @interface ViewController : UIViewController <UISearchBarDelegate, MKMapViewDelegate, NSFetchedResultsControllerDelegate> {
@@ -23,7 +22,6 @@
 }
 
 @property (nonatomic, strong) IBOutlet DetailViewController *detailViewController;
-@property (strong, nonatomic) SMClient *client;
 @property (strong, nonatomic) SMQuery *query;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

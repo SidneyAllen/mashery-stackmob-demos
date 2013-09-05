@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "AppDelegate.h"
 #import "StackMob.h"
 #import "SMClient.h"
 #import "SMQuery.h"
@@ -16,6 +15,7 @@
 #import "DetailViewController.h"
 #import "FavoriteViewController.h"
 #import "AccountViewController.h"
+#import "ADVTheme.h"
 
 @interface ViewController ()
 
@@ -24,10 +24,6 @@
 @end
 
 @implementation ViewController
-
-- (AppDelegate *)appDelegate {
-    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
-}
 
 - (id) init
 {
@@ -44,12 +40,13 @@
     
     self.title = @"Search";
     
-    UIImage *navBarImage = [UIImage imageNamed:@"ipad-menu-bar.png"];
+    id <ADVTheme> theme = [ADVThemeManager sharedTheme];
+
+    [self.navigationController.navigationBar setBarStyle:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault]];
     
-    [self.navigationController.navigationBar setBackgroundImage:navBarImage
-                                                  forBarMetrics:UIBarMetricsDefault];
-    
+   
     // Search Bar
+    /*
     [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor lightGrayColor]];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil]
@@ -61,27 +58,25 @@
     
     UIImage *image1 = [UIImage imageNamed:@"ipad-back.png"];
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:image1 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    */
     
-    
-    self.managedObjectContext = [[self.appDelegate coreDataStore] contextForCurrentThread];
-    self.client = [self.appDelegate client];
-}
-
--(void) viewDidAppear:(BOOL)animated {
-    if([self.client isLoggedIn]) {
+    if([[SMClient defaultClient] isLoggedIn]) {
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(submitLogout:)];
         
         self.navigationItem.rightBarButtonItem = rightButton;
-       
+        
     } else {
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(goToLogin:)];
         
         self.navigationItem.rightBarButtonItem = rightButton;
     }
     
-    UIImage *image1 = [UIImage imageNamed:@"ipad-menubar-button.png"];
-    [self.navigationItem.rightBarButtonItem setBackgroundImage:image1 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [self.navigationItem.rightBarButtonItem setBackButtonBackgroundImage:[theme navigationBackgroundForBarMetrics:UIBarMetricsDefault] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+    self.managedObjectContext = [[[SMClient defaultClient] coreDataStore] contextForCurrentThread];
 }
+
+
 
 -(IBAction)goToLogin:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:[NSBundle mainBundle]];
@@ -91,12 +86,13 @@
 }
 
 -(IBAction)submitLogout:(id)sender {
-    [self.client logoutOnSuccess:^(NSDictionary *result) {
+    [[SMClient defaultClient] logoutOnSuccess:^(NSDictionary *result) {
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Login" style:UIBarButtonItemStylePlain target:self action:@selector(goToLogin:)];
         
         self.navigationItem.rightBarButtonItem = rightButton;
         
         UIImage *image1 = [UIImage imageNamed:@"ipad-menubar-button.png"];
+        
         [self.navigationItem.rightBarButtonItem setBackgroundImage:image1 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
         
     } onFailure:^(NSError *error) {
@@ -105,11 +101,12 @@
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    id <ADVTheme> theme = [ADVThemeManager sharedTheme];
     searchBar.showsScopeBar = YES;
     [searchBar sizeToFit];
     
     [searchBar setShowsCancelButton:YES animated:YES];
-    
+    [searchBar setBarStyle:[theme barButtonBackgroundForState:UIControlStateNormal style:UIControlStateNormal barMetrics:UIBarMetricsDefault]];
     return YES;
 }
 

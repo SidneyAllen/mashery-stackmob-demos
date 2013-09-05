@@ -8,7 +8,6 @@
 
 #import "DetailViewController.h"
 #import "StackMob.h"
-#import "AppDelegate.h"
 
 @interface DetailViewController ()
 
@@ -20,12 +19,6 @@
 @synthesize locationForActivity = _locationForActivity;
 @synthesize urlForActivity = _urlForActivity;
 @synthesize summaryForActivity = _summaryForActivity;
-@synthesize client = _client;
-
-
-- (AppDelegate *)appDelegate {
-    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,8 +31,7 @@
                                                   forBarMetrics:UIBarMetricsDefault];
 
     
-    self.managedObjectContext = [[self.appDelegate coreDataStore] contextForCurrentThread];
-    self.client = [self.appDelegate client];
+    self.managedObjectContext = [[[SMClient defaultClient] coreDataStore] contextForCurrentThread];
     
     self.titleLabel.textLabel.text = self.titleForActivity;
     self.locationLabel.textLabel.text = self.locationForActivity;
@@ -59,7 +51,7 @@
 }
 
 -(IBAction)submitLogout:(id)sender {
-    [self.client logoutOnSuccess:^(NSDictionary *result) {
+    [[SMClient defaultClient] logoutOnSuccess:^(NSDictionary *result) {
         [self updateView];
 
     } onFailure:^(NSError *error) {
@@ -75,7 +67,7 @@
 }
 
 -(void)updateView {
-    if([self.client isLoggedIn]) {
+    if([[SMClient defaultClient] isLoggedIn]) {
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(submitLogout:)];
         
         self.navigationItem.rightBarButtonItem = rightButton;
@@ -90,7 +82,7 @@
 }
 
 - (IBAction)addFavorite:(id)sender {
-    if([self.client isLoggedIn]) {
+    if([[SMClient defaultClient] isLoggedIn]) {
         
         // Save the title in StackMob
         NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"Favorite" inManagedObjectContext:self.managedObjectContext];
